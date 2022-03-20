@@ -1,0 +1,14 @@
+name: Continuous Delivery
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  cicd:
+    uses: trialstudio/reusable_github_workflows/.github/workflows/maven_continuous_delivery.yml@main
+    with:
+      java_version: 17
+      project_name: demo-java
+    secrets:
+      github_repo_token: ${{ secrets.GITHUB_TOKEN }}

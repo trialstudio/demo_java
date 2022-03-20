@@ -1,0 +1,20 @@
+name: Deploy to Prod
+
+on:
+  workflow_dispatch:
+    inputs:
+      release:
+        type: string
+        required: true
+        description: version of release to deploy
+
+jobs:
+  deploy_to_prod:
+    uses: trialstudio/reusable_github_workflows/.github/workflows/nodejs_deploy_to_s3.yml@main
+    with:
+      release_tag: ${{ github.event.inputs.release }}
+      bucket: demo-react-app.trial.studio
+    secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets.DEMO_REACT_APP_AWS_ACCESS_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.DEMO_REACT_APP_AWS_SECRET }}
+      AWS_DEFAULT_REGION: "us-east-2"

@@ -1,0 +1,11 @@
+name: Pull Request Check
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    uses: trialstudio/reusable_github_workflows/.github/workflows/maven_pull_request_check.yml@main
+    with:
+      java_version: 17
