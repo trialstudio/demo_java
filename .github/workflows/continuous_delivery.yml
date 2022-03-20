@@ -9,7 +9,7 @@ jobs:
     uses: trialstudio/reusable_github_workflows/.github/workflows/maven_continuous_delivery.yml@main
     with:
       java_version: 17
-      project_name: demo-java
+      project_name: demo_java
     secrets:
       github_repo_token: ${{ secrets.GITHUB_TOKEN }}
       aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
