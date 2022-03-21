@@ -9,7 +9,7 @@ jobs:
   cicd:
     uses: trialstudio/reusable_github_workflows/.github/workflows/maven_continuous_delivery.yml@main
     with:
-      java_version: 17
+      java_version: 11
       project_name: demo_java
     secrets:
       github_repo_token: ${{ secrets.GITHUB_TOKEN }}

@@ -2,25 +2,35 @@ package com.example.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.cloud.function.context.FunctionRegistration;
+import org.springframework.cloud.function.context.FunctionType;
+import org.springframework.cloud.function.context.catalog.FunctionTypeUtils;
+import org.springframework.context.ApplicationContextInitializer;
+import org.springframework.context.support.GenericApplicationContext;
+
+import java.util.function.Function;
 
 @SpringBootApplication
-public class DemoApplication {
+public class DemoApplication implements ApplicationContextInitializer<GenericApplicationContext> {
 
-	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(DemoApplication.class, args);
+    }
 
-}
+    public Function<String, String> uppercase() {
+        return value -> {
+            if (value.equals("exception")) {
+                throw new RuntimeException("Intentional exception");
+            } else {
+                return value.toUpperCase();
+            }
+        };
+    }
 
-@RestController
-class Test {
-
-	@GetMapping
-	public String test() {
-		return "test";
-	}
+    @Override
+    public void initialize(GenericApplicationContext context) {
+        context.registerBean("function", FunctionRegistration.class,
+                () -> new FunctionRegistration<>(uppercase())
+                        .type(FunctionType.from(String.class).to(String.class)));
+    }
 }
