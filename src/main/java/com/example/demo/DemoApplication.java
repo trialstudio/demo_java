@@ -33,7 +33,7 @@ public class DemoApplication implements ApplicationContextInitializer<GenericApp
             System.out.println(value);
 
 //            return new APIGatewayProxyResponseEvent().withBody("test");
-            return APIGatewayV2HTTPResponse.builder().withBody("test").build();
+            return APIGatewayV2HTTPResponse.builder().withBody("test").withStatusCode(200).build();
         };
 //        return value -> "woah";
     }
