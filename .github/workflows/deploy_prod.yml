@@ -3,18 +3,23 @@ name: Deploy to Prod
 on:
   workflow_dispatch:
     inputs:
-      release:
+      version:
         type: string
         required: true
-        description: version of release to deploy
+        description: image version (same as tag) to deploy
+      aws_region:
+        type: string
+        required: true
+        description: aws region to deploy function
+        default: "us-east-2"
 
 jobs:
-  deploy_to_prod:
-    uses: trialstudio/reusable_github_workflows/.github/workflows/nodejs_deploy_to_s3.yml@main
+  deploy_to_dev:
+    uses: trialstudio/reusable_github_workflows/.github/workflows/deploy_lambda_with_image.yml@main
     with:
-      release_tag: ${{ github.event.inputs.release }}
-      bucket: demo-react-app.trial.studio
+      image: ${{ secrets:image_repository }}:${{ inputs.version }}
+      aws_region: ${{ inputs.aws_region }}
+      function_name: ${{ secrets.function_name }}
     secrets:
-      AWS_ACCESS_KEY_ID: ${{ secrets.DEMO_REACT_APP_AWS_ACCESS_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.DEMO_REACT_APP_AWS_SECRET }}
-      AWS_DEFAULT_REGION: "us-east-2"
+      aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
