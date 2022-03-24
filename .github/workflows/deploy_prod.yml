@@ -17,8 +17,8 @@ jobs:
   deploy_to_dev:
     uses: trialstudio/reusable_github_workflows/.github/workflows/deploy_lambda_with_image.yml@main
     with:
-      image: ${{ secrets.IMAGE_REPOSITORY }}:${{ inputs.version }}
       aws_region: ${{ inputs.aws_region }}
-      function_name: ${{ secrets.FUNCTION_NAME }}
     secrets:
       aws_assume_role: ${{ secrets.AWS_ASSUME_ROLE }}
+      image: ${{ secrets.IMAGE_REPOSITORY }}:${{ inputs.version }}
+      function_name: ${{ secrets.FUNCTION_NAME }}

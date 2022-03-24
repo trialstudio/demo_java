@@ -18,8 +18,8 @@ jobs:
     uses: trialstudio/reusable_github_workflows/.github/workflows/deploy_lambda_with_image.yml@main
     needs: cicd
     with:
-      image: ${{ secrets.IMAGE_REPOSITORY }}:${{ needs.cicd.outputs.release_tag }}
       aws_region: ${{ inputs.aws_region }}
-      function_name: ${{ secrets.FUNCTION_NAME }}
     secrets:
       aws_assume_role: ${{ secrets.AWS_ASSUME_ROLE }}
+      image: ${{ secrets.IMAGE_REPOSITORY }}:${{ needs.cicd.outputs.release_tag }}
+      function_name: ${{ secrets.FUNCTION_NAME }}
