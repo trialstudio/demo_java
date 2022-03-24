@@ -7,7 +7,7 @@ on:
         type: string
         required: true
         description: image version (same as tag) to deploy
-      awsregion:
+      aws_region:
         type: string
         required: true
         description: aws region to deploy function
@@ -17,8 +17,8 @@ jobs:
   deploy_to_dev:
     uses: trialstudio/reusable_github_workflows/.github/workflows/deploy_lambda_with_image.yml@main
     with:
-      aws_region: ${{ github.event.inputs.awsregion }}
+      aws_region: ${{ github.event.inputs.aws_region }}
     secrets:
       aws_assume_role: ${{ secrets.AWS_ASSUME_ROLE }}
-      image: ${{ secrets.IMAGE_REPOSITORY }}:${{ inputs.version }}
+      image: ${{ secrets.IMAGE_REPOSITORY }}:${{ github.event.inputs.version }}
       function_name: ${{ secrets.FUNCTION_NAME }}
